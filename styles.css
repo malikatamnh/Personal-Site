@@ -1,0 +1,127 @@
+.top-container {
+  background-color: #C2DED1;
+  padding-top: 100px;
+  position: relative;
+
+}
+.middle-container {
+margin: 100 0 100 0;
+}
+.bottom-container {
+background-color: #66BFBF;
+margin-bottom: 0;
+margin-top: 70px;
+padding: 20px;
+}
+body {
+  color: #40514E;
+  margin: 0;
+  text-align: center;
+  font-family: 'Merriweather', serif;
+}
+
+h1 {
+  margin: 52px auto 0 auto;
+  font-size: 5.625rem;
+  font-family: Sacramento;
+  white-space: nowrap;
+  color: #66BFBF;
+}
+ h2 {
+  font-family: Montserrat;
+  font-size: 2.5rem;
+  margin-top: 0;
+  margin-bottom: 20px;
+  color: #66BFBF;
+  font-weight: normal;
+  padding-bottom: 10px;
+}
+h3 {
+  font-family: Montserrat;
+  font-size: 1.4rem;
+  margin-top: 0;
+  color: #11999E;
+}
+a {
+  color: #11999E;
+  text-decoration: none;
+  padding: 15px;
+}
+a:hover {
+  color: #EAF6F6;
+}
+p {
+  line-height: 2;
+}
+
+.intro {
+  width: 30%;
+  margin: auto;
+}
+.hello-intro {
+  padding-top: 30px;
+}
+
+.bottom-cloud  {
+position: absolute;
+left: 300px;
+bottom: 300px;
+}
+.top-cloud {
+position: absolute;
+right: 300px;
+top: 50px;
+}
+.profile-pic {
+  width: 150px;
+  height: 150px;
+  border-radius: 75px;
+  margin-top: 30px;
+}
+.first-skill-pic {
+  width: 200px;
+  height: 200px;
+  border-radius: 100px;
+  float: left;
+  margin-right: 30px;
+}
+.second-skill-pic {
+  width: 200px;
+  height: 200px;
+  border-radius: 100px;
+  float: right;
+  margin-left: 30px;
+}
+.skill-row {
+  width: 50%;
+  margin: 100px auto 100px;
+  text-align: left;
+
+}
+
+hr {
+width: 4%;
+border-style: none;
+border-top-style: dotted;
+border-color: lightgrey;
+border-width: 6px;
+margin: 100px auto;
+}
+.autograph {
+  font-size: 0.75rem;
+  color: #EAF6F6;
+  padding: 20px 0;
+}
+
+.btn {
+  padding: 9px 17px 9px 17px;
+  background-color: #11999E;
+  border-radius: 8px;
+  color: white;
+  font-family: Montserrat;
+  opacity: 1;
+  transition: opacity 0.15s;
+}
+.btn:hover {
+  opacity: 0.7;
+}
