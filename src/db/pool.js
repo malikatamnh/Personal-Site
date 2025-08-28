@@ -32,6 +32,14 @@ export async function initDb() {
 			image TEXT,
 			created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 		);
+
+		CREATE TABLE IF NOT EXISTS users (
+			id SERIAL PRIMARY KEY,
+			name TEXT NOT NULL,
+			email TEXT NOT NULL UNIQUE,
+			password TEXT NOT NULL,
+			created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+		);
 	`;
 
 	try {

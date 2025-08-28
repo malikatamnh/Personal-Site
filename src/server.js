@@ -6,6 +6,7 @@ import path from "node:path";
 import fs from "node:fs";
 import dotenv from "dotenv";
 import carsRouter from "./routes/cars.js";
+import authRouter from "./routes/auth.js";
 import { initDb } from "./db/pool.js";
 
 dotenv.config();
@@ -29,6 +30,7 @@ app.use("/uploads", express.static(uploadsDir));
 
 // Routes
 app.use("/cars", carsRouter);
+app.use("/auth", authRouter);
 
 app.get("/health", (_req, res) => {
 	res.json({ status: "ok" });
