@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ActivityIndicator, Button, Alert } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-
-const API_BASE = process.env.EXPO_PUBLIC_API_BASE || 'http://localhost:3000';
+import { API_BASE } from '../lib/api';
+import { useAuth } from './context/AuthProvider';
 
 export default function ProfileScreen() {
+	const { token, setToken } = useAuth();
 	const [loading, setLoading] = useState(true);
 	const [user, setUser] = useState<any>(null);
 	const [error, setError] = useState<string | null>(null);
@@ -12,7 +12,6 @@ export default function ProfileScreen() {
 	useEffect(() => {
 		(async () => {
 			try {
-				const token = await AsyncStorage.getItem('token');
 				if (!token) throw new Error('Not logged in');
 				const res = await fetch(`${API_BASE}/auth/profile`, {
 					headers: { Authorization: `Bearer ${token}` }
@@ -25,10 +24,10 @@ export default function ProfileScreen() {
 				setLoading(false);
 			}
 		})();
-	}, []);
+	}, [token]);
 
 	async function logout() {
-		await AsyncStorage.removeItem('token');
+		await setToken(null);
 		Alert.alert('התנתקת');
 	}
 
