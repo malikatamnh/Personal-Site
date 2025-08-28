@@ -1,5 +1,6 @@
 import dotenv from "dotenv";
 import pkg from "pg";
+import { newDb } from "pg-mem";
 
 const { Pool } = pkg;
 
@@ -7,16 +8,26 @@ dotenv.config();
 
 const isProduction = process.env.NODE_ENV === "production";
 
-export const pool = new Pool({
-	host: process.env.PGHOST || process.env.PG_HOST || "localhost",
-	port: Number(process.env.PGPORT || process.env.PG_PORT || 5432),
-	user: process.env.PGUSER || process.env.PG_USER || "postgres",
-	password: process.env.PGPASSWORD || process.env.PG_PASSWORD || "postgres",
-	database: process.env.PGDATABASE || process.env.PG_DATABASE || "cars_db",
-	ssl: !!(process.env.PGSSL === "true" || process.env.PG_SSL === "true"),
-	max: Number(process.env.PGPOOL_MAX || 10),
-	idleTimeoutMillis: Number(process.env.PG_IDLE_TIMEOUT_MS || 30000)
-});
+let pool;
+if (process.env.PG_INMEM === "true") {
+	const db = newDb({ autoCreateForeignKeyIndices: true });
+	const pgMem = db.adapters.createPg();
+	const { Pool: MemPool } = pgMem;
+	pool = new MemPool();
+	console.log("[DB] Using in-memory pg-mem database");
+} else {
+	pool = new Pool({
+		host: process.env.PGHOST || process.env.PG_HOST || "localhost",
+		port: Number(process.env.PGPORT || process.env.PG_PORT || 5432),
+		user: process.env.PGUSER || process.env.PG_USER || "postgres",
+		password: process.env.PGPASSWORD || process.env.PG_PASSWORD || "postgres",
+		database: process.env.PGDATABASE || process.env.PG_DATABASE || "cars_db",
+		ssl: !!(process.env.PGSSL === "true" || process.env.PG_SSL === "true"),
+		max: Number(process.env.PGPOOL_MAX || 10),
+		idleTimeoutMillis: Number(process.env.PG_IDLE_TIMEOUT_MS || 30000)
+	});
+}
+export { pool };
 
 export async function initDb() {
 	// Create Cars table if it does not exist
