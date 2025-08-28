@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-
-const API_BASE = process.env.EXPO_PUBLIC_API_BASE || 'http://localhost:3000';
+import { useAuth } from './context/AuthProvider';
+import { API_BASE } from '../lib/api';
 
 export default function LoginScreen() {
+	const { setToken } = useAuth();
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [loading, setLoading] = useState(false);
@@ -22,7 +22,7 @@ export default function LoginScreen() {
 				throw new Error(body.error || 'Login failed');
 			}
 			const data = await res.json();
-			await AsyncStorage.setItem('token', data.token);
+			await setToken(data.token);
 			Alert.alert('התחברת בהצלחה');
 		} catch (e: any) {
 			Alert.alert(e.message);
