@@ -38,8 +38,16 @@ export async function initDb() {
 			name TEXT NOT NULL,
 			email TEXT NOT NULL UNIQUE,
 			password TEXT NOT NULL,
+			role TEXT NOT NULL DEFAULT 'user',
+			blocked BOOLEAN NOT NULL DEFAULT false,
 			created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 		);
+
+		-- Ensure columns exist for older schemas
+		DO $$ BEGIN
+			BEGIN ALTER TABLE users ADD COLUMN IF NOT EXISTS role TEXT NOT NULL DEFAULT 'user'; EXCEPTION WHEN duplicate_column THEN END;
+			BEGIN ALTER TABLE users ADD COLUMN IF NOT EXISTS blocked BOOLEAN NOT NULL DEFAULT false; EXCEPTION WHEN duplicate_column THEN END;
+		END $$;
 	`;
 
 	try {

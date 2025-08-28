@@ -58,7 +58,7 @@ router.post("/login", async (req, res) => {
 		}
 
 		const { email, password } = value;
-		const { rows } = await pool.query(`SELECT id, name, email, password, created_at FROM users WHERE email = $1`, [email]);
+		const { rows } = await pool.query(`SELECT id, name, email, password, role, blocked, created_at FROM users WHERE email = $1`, [email]);
 		if (rows.length === 0) {
 			return res.status(401).json({ error: "Invalid credentials" });
 		}
@@ -67,10 +67,13 @@ router.post("/login", async (req, res) => {
 		if (!ok) {
 			return res.status(401).json({ error: "Invalid credentials" });
 		}
+		if (user.blocked) {
+			return res.status(403).json({ error: "User is blocked" });
+		}
 		const token = generateJwt(user.id);
 		return res.json({
 			token,
-			user: { id: user.id, name: user.name, email: user.email, created_at: user.created_at }
+			user: { id: user.id, name: user.name, email: user.email, role: user.role, blocked: user.blocked, created_at: user.created_at }
 		});
 	} catch (err) {
 		console.error("[POST /auth/login]", err);
