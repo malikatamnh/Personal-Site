@@ -20,7 +20,9 @@
     "react-native": "0.79.6",
     "react-native-safe-area-context": "^5.6.1",
     "react-native-screens": "^4.15.4",
-    "expo-notifications": "~0.31.4"
+    "expo-notifications": "~0.31.4",
+    "typescript": "~5.8.3",
+    "@types/react": "~19.0.10"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"
